@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 import { analyzeEvent } from "../src/analyze.js";
 import { loadConfig } from "../src/config.js";
-import { applyGitHubPlan, isTruthy, readGitHubEvent } from "../src/github.js";
+import { applyGitHubPlan, hydrateGitHubEvent, isTruthy, readGitHubEvent } from "../src/github.js";
 import { maybeAddOpenAiSummary } from "../src/openai.js";
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const event = await readGitHubEvent(args.event);
+  const event = await hydrateGitHubEvent({
+    event: await readGitHubEvent(args.event),
+    token: process.env.GITHUB_TOKEN,
+    repository: process.env.GITHUB_REPOSITORY
+  });
   const config = await loadConfig(args.config || "maintainerkit.yml");
   const dryRun = args.dryRun === undefined ? true : isTruthy(args.dryRun);
 
@@ -21,6 +25,7 @@ async function main() {
   const result = await applyGitHubPlan({
     event,
     plan,
+    config,
     token: process.env.GITHUB_TOKEN,
     repository: process.env.GITHUB_REPOSITORY,
     dryRun
@@ -39,7 +44,13 @@ function parseArgs(args) {
       process.exit(0);
     }
     if (arg === "--dry-run") {
-      parsed.dryRun = "true";
+      const next = args[index + 1];
+      if (next && !next.startsWith("--")) {
+        parsed.dryRun = next;
+        index += 1;
+      } else {
+        parsed.dryRun = "true";
+      }
       continue;
     }
     if (arg.startsWith("--")) {

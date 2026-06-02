@@ -6,7 +6,9 @@ MaintainerKit is a GitHub Action and CLI for open source maintainers. It automat
 
 - Labels new issues as `bug`, `feature`, `question`, `security`, or `needs-repro`.
 - Posts a concise triage note with missing information and next steps.
-- Reviews pull request metadata for tests, risky files, large diffs, and documentation impact.
+- Fetches pull request changed files from the GitHub API and checks tests, risky files, and large diffs.
+- Creates missing labels before applying them.
+- Updates the existing MaintainerKit comment instead of posting duplicate comments.
 - Generates release checklists for tag and release workflows.
 - Runs in `dry-run` mode by default-friendly CLI workflows before enabling writes.
 - Optionally uses OpenAI for a maintainer-facing summary when an API key is provided.
@@ -36,9 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: WDDong/maintainerkit@v0.1.0
+      - uses: WDDong/maintainerkit@v0.2.0
         with:
           dry-run: "false"
+          github-token: ${{ github.token }}
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
 ```
 
@@ -58,6 +61,11 @@ labels:
   needsTests: needs-tests
   needsMaintainerReview: needs-maintainer-review
 
+actions:
+  labels: true
+  comments: true
+  createLabels: true
+
 review:
   maxChangedFiles: 30
   maxAdditions: 1000
@@ -72,6 +80,12 @@ review:
     - __tests__/
 ```
 
+## Example output
+
+When a pull request touches a workflow without tests, MaintainerKit can apply `needs-tests` and `needs-maintainer-review`, then create or update one review comment.
+
+![MaintainerKit PR review sample](docs/assets/sample-pr-review.svg)
+
 ## CLI usage
 
 Run MaintainerKit locally against a GitHub event payload:
@@ -85,6 +99,27 @@ Or run directly from the repository:
 ```bash
 node ./bin/maintainerkit.js --event ./examples/pr-event.json --config ./examples/maintainerkit.yml --dry-run
 ```
+
+To allow writes from the CLI, provide `GITHUB_TOKEN`, `GITHUB_REPOSITORY`, and `--dry-run false`:
+
+```bash
+GITHUB_TOKEN=... GITHUB_REPOSITORY=WDDong/maintainerkit node ./bin/maintainerkit.js --event ./examples/pr-event.json --config ./maintainerkit.yml --dry-run false
+```
+
+## Configuration
+
+Use `actions` to control what MaintainerKit is allowed to change:
+
+```yaml
+actions:
+  labels: true
+  comments: true
+  createLabels: true
+```
+
+- `labels: false` prevents label application.
+- `comments: false` prevents issue or PR comments.
+- `createLabels: false` requires labels to already exist in the repository.
 
 ## OpenAI summary
 

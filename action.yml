@@ -17,6 +17,10 @@ inputs:
     description: "Print planned actions without writing labels or comments."
     required: false
     default: "false"
+  github-token:
+    description: "GitHub token used to read PR files, create labels, and upsert comments."
+    required: false
+    default: ${{ github.token }}
   openai-api-key:
     description: "Optional OpenAI API key for maintainer summaries."
     required: false

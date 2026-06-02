@@ -11,6 +11,11 @@ labels:
   needsTests: needs-tests
   needsMaintainerReview: needs-maintainer-review
 
+actions:
+  labels: true
+  comments: true
+  createLabels: true
+
 review:
   maxChangedFiles: 20
   maxAdditions: 500

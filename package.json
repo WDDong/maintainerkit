@@ -1,6 +1,6 @@
 {
   "name": "maintainerkit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "GitHub Action and CLI for automating open source maintainer workflows.",
   "type": "module",
   "bin": {

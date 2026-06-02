@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { analyzeEvent } from "./analyze.js";
 import { loadConfig } from "./config.js";
-import { applyGitHubPlan, isTruthy, readGitHubEvent, readInput } from "./github.js";
+import { applyGitHubPlan, hydrateGitHubEvent, isTruthy, readGitHubEvent, readInput } from "./github.js";
 import { maybeAddOpenAiSummary } from "./openai.js";
 import { appendFile } from "node:fs/promises";
 
@@ -10,7 +10,12 @@ async function main() {
   const configPath = readInput("config", "maintainerkit.yml");
   const dryRun = isTruthy(readInput("dry-run", "false"));
   const config = await loadConfig(configPath);
-  const event = await readGitHubEvent();
+  const token = readInput("github-token", process.env.GITHUB_TOKEN || "");
+  const event = await hydrateGitHubEvent({
+    event: await readGitHubEvent(),
+    token,
+    repository: process.env.GITHUB_REPOSITORY
+  });
   const apiKey = readInput("openai-api-key", process.env.OPENAI_API_KEY || "");
 
   let plan = analyzeEvent(event, config, mode);
@@ -24,7 +29,8 @@ async function main() {
   const result = await applyGitHubPlan({
     event,
     plan,
-    token: process.env.GITHUB_TOKEN,
+    config,
+    token,
     repository: process.env.GITHUB_REPOSITORY,
     dryRun
   });

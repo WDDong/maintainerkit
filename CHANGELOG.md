@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0
+
+- Fetch pull request changed files from the GitHub API when event payloads do not include file details.
+- Automatically create configured labels before applying them.
+- Update an existing MaintainerKit comment instead of posting duplicate comments.
+- Added `actions.labels`, `actions.comments`, and `actions.createLabels` configuration switches.
+- Added README workflow examples and sample output.
+
 ## 0.1.0
 
 - Added GitHub Action entry point for issue, pull request, and release events.
