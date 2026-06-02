@@ -1,0 +1,11 @@
+{
+  "action": "created",
+  "release": {
+    "name": "v0.1.0",
+    "tag_name": "v0.1.0",
+    "body": "Initial MaintainerKit release."
+  },
+  "repository": {
+    "full_name": "WDDong/maintainerkit"
+  }
+}

@@ -1,0 +1,29 @@
+name: Bug report
+description: Report a reproducible MaintainerKit problem.
+title: "[Bug]: "
+labels: ["bug", "needs-repro"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug and the behavior you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide a minimal event payload, config, or workflow snippet.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: MaintainerKit version
+      placeholder: v0.1.0
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      render: shell

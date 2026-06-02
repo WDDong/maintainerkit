@@ -1,0 +1,22 @@
+project:
+  name: Example Project
+  defaultBranch: main
+
+labels:
+  bug: bug
+  feature: enhancement
+  question: question
+  security: security
+  needsRepro: needs-repro
+  needsTests: needs-tests
+  needsMaintainerReview: needs-maintainer-review
+
+review:
+  maxChangedFiles: 20
+  maxAdditions: 500
+  sensitivePaths:
+    - package.json
+    - .github/workflows/
+  testPaths:
+    - test/
+    - tests/

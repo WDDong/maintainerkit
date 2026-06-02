@@ -1,0 +1,11 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 42,
+    "title": "Crash when loading config",
+    "body": "The app throws an exception after startup. Expected it to load normally."
+  },
+  "repository": {
+    "full_name": "WDDong/maintainerkit"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "maintainerkit",
+  "version": "0.1.0",
+  "description": "GitHub Action and CLI for automating open source maintainer workflows.",
+  "type": "module",
+  "bin": {
+    "maintainerkit": "./bin/maintainerkit.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "lint": "node scripts/check-format.js"
+  },
+  "keywords": [
+    "github-action",
+    "open-source",
+    "maintainers",
+    "issue-triage",
+    "pull-request-review",
+    "release"
+  ],
+  "author": "WDDong",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}

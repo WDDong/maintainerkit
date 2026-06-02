@@ -1,0 +1,22 @@
+{
+  "action": "opened",
+  "pull_request": {
+    "number": 12,
+    "title": "Update GitHub workflow",
+    "changed_files": 2,
+    "additions": 24,
+    "changed_files_detail": [
+      {
+        "filename": ".github/workflows/ci.yml",
+        "additions": 12
+      },
+      {
+        "filename": "src/action.js",
+        "additions": 12
+      }
+    ]
+  },
+  "repository": {
+    "full_name": "WDDong/maintainerkit"
+  }
+}

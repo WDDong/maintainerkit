@@ -1,0 +1,32 @@
+name: MaintainerKit
+description: Automate issue triage, PR review hints, and release checklists for open source maintainers.
+author: WDDong
+branding:
+  icon: check-circle
+  color: blue
+inputs:
+  mode:
+    description: "Workflow mode: auto, issue, pull_request, or release."
+    required: false
+    default: auto
+  config:
+    description: "Path to maintainerkit.yml or maintainerkit.json."
+    required: false
+    default: maintainerkit.yml
+  dry-run:
+    description: "Print planned actions without writing labels or comments."
+    required: false
+    default: "false"
+  openai-api-key:
+    description: "Optional OpenAI API key for maintainer summaries."
+    required: false
+outputs:
+  plan:
+    description: "JSON encoded MaintainerKit plan."
+  labels:
+    description: "JSON encoded labels suggested by MaintainerKit."
+  warnings:
+    description: "JSON encoded warnings produced by MaintainerKit."
+runs:
+  using: node20
+  main: src/action.js

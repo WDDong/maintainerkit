@@ -1,0 +1,24 @@
+name: Feature request
+description: Suggest a maintainer workflow MaintainerKit should support.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Maintainer problem
+      description: What repetitive maintenance work would this reduce?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the labels, comments, checks, or outputs you expect.
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and false positives
+      description: Where could this automation be wrong or too aggressive?

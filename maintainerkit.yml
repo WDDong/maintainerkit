@@ -1,0 +1,25 @@
+project:
+  name: MaintainerKit
+  defaultBranch: main
+
+labels:
+  bug: bug
+  feature: enhancement
+  question: question
+  security: security
+  needsRepro: needs-repro
+  needsTests: needs-tests
+  needsMaintainerReview: needs-maintainer-review
+
+review:
+  maxChangedFiles: 30
+  maxAdditions: 1000
+  sensitivePaths:
+    - package.json
+    - action.yml
+    - src/github.js
+    - .github/workflows/
+  testPaths:
+    - test/
+    - tests/
+    - __tests__/
